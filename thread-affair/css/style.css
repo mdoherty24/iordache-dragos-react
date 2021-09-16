@@ -685,6 +685,24 @@ a {
   font-size: 12px;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.home-newsletter button[type='submit'].busy {
+  background: none;
+}
+
+.home-newsletter button[type='submit'].busy .icon {
+  animation: spin 1s linear infinite;
+}
+
 .footer-top {
   min-height: 322px;
   background: url('../images/banners/banner-06.jpg') no-repeat center right

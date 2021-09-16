@@ -3,6 +3,8 @@ class NewsletterForm extends React.Component {
   state = {
     email: '',
     inputMessage: '',
+    busy: false,
+    submitted: false,
   };
 
   validateEmail(email) {
@@ -25,9 +27,18 @@ class NewsletterForm extends React.Component {
       return;
     }
 
+    this.setState({
+      busy: true,
+    });
+
     setTimeout(() => {
       alert(`Hello, ${email} thank you for subscribing`);
-    }, 3000);
+
+      this.setState({
+        busy: false,
+        email: '',
+      });
+    }, 500);
   };
 
   onInputChange = (event) => {
@@ -38,30 +49,45 @@ class NewsletterForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="form-newsletter container">
-        <label htmlFor="field-newsletter">
-          Subscribe to our <span>newsletter</span>
-        </label>
+      <div>
+        {this.state.submitted === true ? (
+          'thank you'
+        ) : (
+          <form onSubmit={this.onSubmit} className="form-newsletter container">
+            <label htmlFor="field-newsletter">
+              Subscribe to our <span>newsletter</span>
+            </label>
 
-        <div>
-          <input
-            type="text"
-            name="field-newsletter"
-            id="field-newsletter"
-            value={this.state.email}
-            onChange={this.onInputChange}
-            placeholder="enter your email address to receive the latest news!"
-          ></input>
+            <div>
+              <input
+                type="text"
+                name="field-newsletter"
+                id="field-newsletter"
+                value={this.state.email}
+                onChange={this.onInputChange}
+                placeholder="enter your email address to receive the latest news!"
+              ></input>
 
-          {this.state.inputMessage.length > 0 ? (
-            <div className="message">{this.state.inputMessage}</div>
-          ) : null}
-        </div>
+              {this.state.inputMessage.length > 0 ? (
+                <div className="message">{this.state.inputMessage}</div>
+              ) : null}
+            </div>
 
-        <button type="submit" title="Subscribe">
-          Subscribe
-        </button>
-      </form>
+            <button
+              type="submit"
+              title="Subscribe"
+              disabled={this.state.busy}
+              className={`${this.state.busy === true ? 'busy' : ''}`}
+            >
+              {this.state.busy ? (
+                <i className="fas fa-spinner icon"></i>
+              ) : (
+                'Subsribe'
+              )}
+            </button>
+          </form>
+        )}
+      </div>
     );
   }
 }
