@@ -115,6 +115,12 @@ class AddToCartButton extends React.Component {
     });
 
     setTimeout(() => {
+      dispatchEvent(
+        new CustomEvent('cart:add', {
+          detail: this.props.productId,
+        }),
+      );
+
       this.setState({
         busy: false,
         added: !this.state.added,
@@ -150,22 +156,44 @@ class AddToWishlistButton extends React.Component {
 
     this.state = {
       added: false,
+      busy: false,
     };
   }
 
   onClick = () => {
     this.setState({
-      added: true,
+      busy: true,
     });
+
+    setTimeout(() => {
+      this.setState({
+        busy: false,
+        added: !this.state.added,
+      });
+    }, 1000);
   };
 
   render() {
+    var { added, busy } = this.state;
     var className =
-      'product-control' + ' ' + (this.state.added ? 'active' : '');
+      'product-control' +
+      ' ' +
+      (added ? 'active' : '') +
+      ' ' +
+      (busy ? 'busy' : '');
 
     return (
-      <button className={className} type="button" onClick={this.onClick}>
-        Add to Wishlist
+      <button
+        className={className}
+        type="button"
+        onClick={this.onClick}
+        title={added === true ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        disabled={busy}
+      >
+        <span>
+          <i className={added === true ? 'fas fa-heart' : 'far fa-heart'}></i>
+        </span>
+        <i className="fas fa-spinner icon"></i>
       </button>
     );
   }
