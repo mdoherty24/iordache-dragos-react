@@ -97,3 +97,40 @@ class NewsletterForm extends React.Component {
 
 const newsletterContainer = document.querySelector('.home-newsletter');
 ReactDOM.render(<NewsletterForm></NewsletterForm>, newsletterContainer);
+
+class AddToCartButton extends React.Component {
+  render() {
+    return (
+      <button className="product-control" type="button">
+        Add to Cart
+      </button>
+    );
+  }
+}
+
+class AddToWishlistButton extends React.Component {
+  render() {
+    return (
+      <button className="product-control" type="button">
+        Add to Wishlist
+      </button>
+    );
+  }
+}
+
+class ProductControls extends React.Component {
+  render() {
+    return [
+      <AddToCartButton key="321"></AddToCartButton>,
+      <AddToWishlistButton key="123"></AddToWishlistButton>,
+    ];
+  }
+}
+
+const productTileControls = document.querySelectorAll('.product-tile-controls');
+productTileControls.forEach((productTileControl, index) => {
+  ReactDOM.render(
+    <ProductControls key={index}></ProductControls>,
+    productTileControl,
+  );
+});
