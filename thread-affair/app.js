@@ -99,19 +99,72 @@ const newsletterContainer = document.querySelector('.home-newsletter');
 ReactDOM.render(<NewsletterForm></NewsletterForm>, newsletterContainer);
 
 class AddToCartButton extends React.Component {
+  // v1
+  state = {
+    added: false,
+    busy: false,
+  };
+
+  onClick = () => {
+    if (this.state.busy === true) {
+      return;
+    }
+
+    this.setState({
+      busy: true,
+    });
+
+    setTimeout(() => {
+      this.setState({
+        busy: false,
+        added: !this.state.added,
+      });
+    }, 1000);
+  };
+
   render() {
     return (
-      <button className="product-control" type="button">
-        Add to Cart
+      <button
+        className={`product-control ${
+          this.state.added === true ? 'active' : ''
+        } ${this.state.busy === true ? 'busy' : ''}`}
+        type="button"
+        title={this.state.added === true ? 'Remove from Cart' : 'Add to Cart'}
+        onClick={this.onClick}
+      >
+        <span>
+          {this.state.added === true
+            ? `PID: ${this.props.productId} in cart`
+            : 'Add to cart'}
+        </span>
+        <i className="fas fa-spinner icon"></i>
       </button>
     );
   }
 }
 
 class AddToWishlistButton extends React.Component {
+  // v2
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      added: false,
+    };
+  }
+
+  onClick = () => {
+    this.setState({
+      added: true,
+    });
+  };
+
   render() {
+    var className =
+      'product-control' + ' ' + (this.state.added ? 'active' : '');
+
     return (
-      <button className="product-control" type="button">
+      <button className={className} type="button" onClick={this.onClick}>
         Add to Wishlist
       </button>
     );
@@ -120,9 +173,14 @@ class AddToWishlistButton extends React.Component {
 
 class ProductControls extends React.Component {
   render() {
+    const productId = this.props.productId;
+
     return [
-      <AddToCartButton key="321"></AddToCartButton>,
-      <AddToWishlistButton key="123"></AddToWishlistButton>,
+      <AddToCartButton key="321" productId={productId}></AddToCartButton>,
+      <AddToWishlistButton
+        key="123"
+        productId={productId}
+      ></AddToWishlistButton>,
     ];
   }
 }
@@ -130,7 +188,7 @@ class ProductControls extends React.Component {
 const productTileControls = document.querySelectorAll('.product-tile-controls');
 productTileControls.forEach((productTileControl, index) => {
   ReactDOM.render(
-    <ProductControls key={index}></ProductControls>,
+    <ProductControls key={index} productId={index}></ProductControls>,
     productTileControl,
   );
 });
