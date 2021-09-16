@@ -5,6 +5,7 @@ class NewsletterForm extends React.Component {
     inputMessage: '',
     busy: false,
     submitted: false,
+    submittedValue: '',
   };
 
   validateEmail(email) {
@@ -32,13 +33,13 @@ class NewsletterForm extends React.Component {
     });
 
     setTimeout(() => {
-      alert(`Hello, ${email} thank you for subscribing`);
-
       this.setState({
         busy: false,
         email: '',
+        submittedValue: this.state.email,
+        submitted: true,
       });
-    }, 500);
+    }, 3000);
   };
 
   onInputChange = (event) => {
@@ -51,7 +52,9 @@ class NewsletterForm extends React.Component {
     return (
       <div>
         {this.state.submitted === true ? (
-          'thank you'
+          <div className="container">
+            Hello {this.state.submittedValue}, thank you for submiting.
+          </div>
         ) : (
           <form onSubmit={this.onSubmit} className="form-newsletter container">
             <label htmlFor="field-newsletter">
