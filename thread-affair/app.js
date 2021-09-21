@@ -309,7 +309,7 @@ class HeaderCounters extends React.Component {
       case REMOVE_FROM_WISHLIST_EVENT:
         for (let i = 0; i < wishlistItems.length; i++) {
           if (wishlistItems[i] === productId) {
-            return;
+            continue;
           }
 
           newProductIds.push(wishlistItems[i]);
