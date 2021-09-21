@@ -239,19 +239,30 @@ class HeaderCounters extends React.Component {
     wishlistItems: [],
   };
 
-  showProducts(collectionName) {
-    alert(this.state[collectionName]);
-    // this.state.carItemsCount
+  showProducts(collectionName, displayName) {
+    let message = '';
+    const bucket = displayName.toLowerCase();
+
+    if (this.state[collectionName] < 1) {
+      message = `There are no products in your ${bucket}.`;
+    }
+
+    message = `These are the pids in your ${bucket}: ${
+      this.state[`${bucket}Items`]
+    }`;
+
+    alert(message);
   }
 
   productCartAction = (event) => {
     const { productId } = event.detail;
     const { type: eventType } = event;
-    let { cartItemsCount } = this.state;
+    let { cartItemsCount, cartItems } = this.state;
 
     switch (eventType) {
       case ADD_TO_CART_EVENT:
         cartItemsCount++;
+        cartItems.push(productId);
         break;
       case REMOVE_FROM_CART_EVENT:
         cartItemsCount--;
@@ -260,6 +271,7 @@ class HeaderCounters extends React.Component {
 
     this.setState({
       cartItemsCount,
+      cartItems,
     });
   };
 
@@ -279,7 +291,7 @@ class HeaderCounters extends React.Component {
           <i
             className="fas fa-heart icon"
             onClick={() => {
-              this.showProducts('wishlistItemsCount');
+              this.showProducts('wishlistItemsCount', 'Wishlist');
             }}
           ></i>
         </div>
@@ -290,7 +302,7 @@ class HeaderCounters extends React.Component {
           <i
             className="fas fa-shopping-cart icon"
             onClick={() => {
-              this.showProducts('cartItemsCount');
+              this.showProducts('cartItemsCount', 'Cart');
             }}
           ></i>
         </div>
