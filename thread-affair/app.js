@@ -336,7 +336,7 @@ class HeaderCounters extends React.Component {
     addEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     removeEventListener(ADD_TO_CART_EVENT, this.productCartAction);
     removeEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
 
