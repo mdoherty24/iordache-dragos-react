@@ -245,11 +245,11 @@ class HeaderCounters extends React.Component {
 
     if (this.state[collectionName] < 1) {
       message = `There are no products in your ${bucket}.`;
+    } else {
+      message = `These are the pids in your ${bucket}: ${
+        this.state[`${bucket}Items`]
+      }`;
     }
-
-    message = `These are the pids in your ${bucket}: ${
-      this.state[`${bucket}Items`]
-    }`;
 
     alert(message);
   }
@@ -266,6 +266,10 @@ class HeaderCounters extends React.Component {
         break;
       case REMOVE_FROM_CART_EVENT:
         cartItemsCount--;
+
+        cartItems = cartItems.filter((item) => {
+          return item !== productId;
+        });
         break;
     }
 
