@@ -1,3 +1,1 @@
-import { contacts } from './modules/data.js';
-
-console.log(contacts);
+import searchForm from './modules/search-form.js';
