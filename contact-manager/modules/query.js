@@ -21,3 +21,20 @@ export const findContact = (needle = 'query') => {
     return false;
   });
 };
+
+export const deleteContact = (contactId) => {
+  let contactIndex = -1;
+  contactId = Number(contactId);
+
+  for (let i = 0; i < contacts.length; i++) {
+    const { id } = contacts[i];
+
+    if (id === contactId) {
+      contactIndex = i;
+    }
+  }
+
+  if (contactIndex >= 0) {
+    contacts.splice(contactIndex, 1);
+  }
+};
