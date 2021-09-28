@@ -1,4 +1,8 @@
-import { contacts } from './data.js';
+import { findContact } from './query.js';
+import { render as renderMessage } from './message.js';
+import { render as renderContact } from './contact.js';
+
+import { addMessage, clearMessages } from './notification-bar.js';
 
 const searchForm = document.querySelector('.search-form');
 
@@ -13,28 +17,26 @@ searchForm.addEventListener('submit', (event) => {
     return;
   }
 
-  // refactor:
-  const tempContacts = contacts.filter((contact) => {
-    const values = Object.values(contact);
-    //values [1, larry, larryson, ;]
+  clearMessages();
 
-    const haystack = values.reduce((string, value) => {
-      if (typeof value === 'string') {
-        string += value.toLowerCase();
-      }
+  const contacts = findContact(searchString);
+  const contactsCount = contacts.length;
 
-      return string;
-    }, '');
+  contacts.forEach((contact) => {
+    console.log(contact);
+    const stageElement = document.querySelector('.stage');
 
-    // haystack 'larrylarrysonlarry@yahoo.4141'
-    if (haystack.includes(searchString)) {
-      return true;
-    }
-
-    return false;
+    stageElement.append(renderContact(contact));
   });
 
-  console.log(tempContacts);
+  if (contactsCount < 1) {
+    const contactNotificationElement = renderMessage(
+      'No contacts found',
+      'warning',
+    );
+    addMessage(contactNotificationElement);
+  } else {
+  }
 });
 
 export default searchForm;
