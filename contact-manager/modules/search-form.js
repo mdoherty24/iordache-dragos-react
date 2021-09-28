@@ -3,6 +3,7 @@ import { render as renderMessage } from './message.js';
 import { render as renderContact } from './contact.js';
 
 import { addMessage, clearMessages } from './notification-bar.js';
+import stage, { clearStage } from './stage.js';
 
 const searchForm = document.querySelector('.search-form');
 
@@ -11,22 +12,22 @@ searchForm.addEventListener('submit', (event) => {
 
   const form = event.currentTarget;
   const formData = new FormData(form);
-  const searchString = formData.get('q');
+  let searchString = formData.get('q');
 
-  if (searchString.trim().length < 1) {
+  searchString = searchString.trim();
+
+  if (searchString.length < 1) {
     return;
   }
 
   clearMessages();
 
   const contacts = findContact(searchString);
+  const fragment = new DocumentFragment();
   const contactsCount = contacts.length;
 
   contacts.forEach((contact) => {
-    console.log(contact);
-    const stageElement = document.querySelector('.stage');
-
-    stageElement.append(renderContact(contact));
+    fragment.append(renderContact(contact));
   });
 
   if (contactsCount < 1) {
@@ -36,7 +37,16 @@ searchForm.addEventListener('submit', (event) => {
     );
     addMessage(contactNotificationElement);
   } else {
+    addMessage(
+      renderMessage(
+        `Found ${contactsCount} ${contactsCount > 1 ? 'contacts' : 'contact'}.`,
+        'success',
+      ),
+    );
   }
+
+  clearStage();
+  stage.append(fragment);
 });
 
 export default searchForm;
