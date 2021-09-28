@@ -1,5 +1,10 @@
 const buttonGroup = [
   {
+    name: 'edit',
+    displayName: 'Edit',
+    buttonClass: 'btn-primary',
+  },
+  {
     name: 'delete',
     displayName: 'Delete',
     buttonClass: 'btn-danger',

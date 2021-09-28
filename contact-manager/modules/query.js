@@ -22,6 +22,14 @@ export const findContact = (needle = 'query') => {
   });
 };
 
+export const getContact = (contactId) => {
+  contactId = Number(contactId);
+
+  return contacts.find(({ id }) => {
+    return id === contactId;
+  });
+};
+
 export const deleteContact = (contactId) => {
   let contactIndex = -1;
   contactId = Number(contactId);
@@ -38,3 +46,5 @@ export const deleteContact = (contactId) => {
     contacts.splice(contactIndex, 1);
   }
 };
+
+export const editContact = (contactId, data) => {};
