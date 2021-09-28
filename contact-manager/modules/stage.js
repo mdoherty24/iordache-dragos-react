@@ -1,6 +1,6 @@
 import { render as renderEditForm } from './edit-contact.js';
 import { render as renderMessage } from './message.js';
-import { addMessage } from './notification-bar.js';
+import { addMessage, clearMessages } from './notification-bar.js';
 import { deleteContact, getContact } from './query.js';
 
 const stage = document.querySelector('.stage');
@@ -42,6 +42,19 @@ stage.addEventListener('click', (event) => {
 
     clearStage();
     stage.append(renderEditForm(contact));
+  }
+});
+
+// cancel edit contact
+stage.addEventListener('click', (event) => {
+  const button = event.target;
+
+  if (
+    button.nodeName === 'BUTTON' &&
+    button.classList.contains('cancel-edit-contact')
+  ) {
+    clearStage();
+    clearMessages();
   }
 });
 

@@ -20,6 +20,8 @@ searchForm.addEventListener('submit', (event) => {
     return;
   }
 
+  form.querySelector('[name="q"]').value = '';
+
   clearMessages();
 
   const contacts = findContact(searchString);
