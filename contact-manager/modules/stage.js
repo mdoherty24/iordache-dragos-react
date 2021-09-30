@@ -51,7 +51,8 @@ stage.addEventListener('click', (event) => {
 
   if (
     button.nodeName === 'BUTTON' &&
-    button.classList.contains('cancel-edit-contact')
+    (button.classList.contains('cancel-edit-contact') ||
+      button.classList.contains('cancel-add-contact'))
   ) {
     clearStage();
     clearMessages();

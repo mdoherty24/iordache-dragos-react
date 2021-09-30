@@ -65,3 +65,7 @@ export const editContact = (contactId, payload) => {
     }
   }
 };
+
+export const addContact = (contact) => {
+  contacts.push(contact);
+};
