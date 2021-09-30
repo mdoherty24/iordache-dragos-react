@@ -1,5 +1,6 @@
 export const render = () => {
   const addContactContainer = document.createElement('form');
+  addContactContainer.classList.add('add-contact');
 
   addContactContainer.innerHTML = `
     <h4 class="mb-2">
