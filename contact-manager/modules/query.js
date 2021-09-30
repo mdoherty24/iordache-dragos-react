@@ -60,6 +60,7 @@ export const editContact = (contactId, payload) => {
     }
 
     if (contactIndex >= 0) {
+      payload.id = Number(payload.id);
       contacts[contactIndex] = payload;
     }
   }
