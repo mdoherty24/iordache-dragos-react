@@ -1,0 +1,6 @@
+.add-contact,
+.add-pet,
+.edit-contact,
+.edit-pet {
+  max-width: 440px;
+}
