@@ -1,12 +1,13 @@
 import { Component, Fragment } from 'react';
 import Search from './components/Search';
 
-const baseUrl = 'https://swapi.dev/api/films';
+const baseUrl = 'https://swapi.dev/api/filmss';
 
 class App extends Component {
   state = {
     busy: false,
     films: [],
+    errorMessage: '',
   };
 
   getFilms() {
@@ -17,11 +18,21 @@ class App extends Component {
     // promise chaining
     fetch(baseUrl)
       .then((response) => {
+        if (response.status === 404) {
+          throw new Error('404');
+        }
+
         return response.json();
       })
       .then(({ results }) => {
         this.setState({
           films: results,
+          busy: false,
+        });
+      })
+      .catch((_) => {
+        this.setState({
+          errorMessage: 'An error has occured.',
           busy: false,
         });
       });
@@ -36,6 +47,10 @@ class App extends Component {
   renderMainScreen() {
     if (this.state.busy === true) {
       return <>... loading</>;
+    }
+
+    if (this.state.busy === false && this.state.errorMessage.length > 0) {
+      return <>{this.state.errorMessage}</>;
     }
 
     return this.renderFilms();
