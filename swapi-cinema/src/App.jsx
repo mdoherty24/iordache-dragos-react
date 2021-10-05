@@ -5,10 +5,15 @@ const baseUrl = 'https://swapi.dev/api/films';
 
 class App extends Component {
   state = {
+    busy: false,
     films: [],
   };
 
   getFilms() {
+    this.setState({
+      busy: true,
+    });
+
     // promise chaining
     fetch(baseUrl)
       .then((response) => {
@@ -17,8 +22,23 @@ class App extends Component {
       .then(({ results }) => {
         this.setState({
           films: results,
+          busy: false,
         });
       });
+  }
+
+  renderFilms() {
+    return this.state.films.map((film) => {
+      return <p key={film.episode_id}>{film.title}</p>;
+    });
+  }
+
+  renderMainScreen() {
+    if (this.state.busy === true) {
+      return <>... loading</>;
+    }
+
+    return this.renderFilms();
   }
 
   componentDidMount() {
@@ -36,11 +56,7 @@ class App extends Component {
           </nav>
         </header>
 
-        <main className="container mt-5 pt-5">
-          {this.state.films.map((film) => {
-            return <p key={film.episode_id}>{film.title}</p>;
-          })}
-        </main>
+        <main className="container mt-5 pt-5">{this.renderMainScreen()}</main>
       </Fragment>
     );
   }
