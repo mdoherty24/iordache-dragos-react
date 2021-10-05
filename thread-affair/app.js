@@ -226,12 +226,19 @@ class ProductControls extends React.Component {
   render() {
     const productId = this.props.productId;
 
+    const WrappedButton = ({ productId }) => {
+      return <AddToCartButton productId={productId}></AddToCartButton>;
+    };
+
+    const Y = AddToWishlistButton;
+
+    function test(Component, props) {
+      <Component {...props}></Component>;
+    }
+
     return [
-      <AddToCartButton key="321" productId={productId}></AddToCartButton>,
-      <AddToWishlistButton
-        key="123"
-        productId={productId}
-      ></AddToWishlistButton>,
+      <WrappedButton key="4321"></WrappedButton>,
+      <Y key="123" productId={productId}></Y>,
     ];
   }
 }
