@@ -2,6 +2,10 @@ import { Component } from 'react';
 
 class Films extends Component {
   renderFilms() {
+    if (this.props.films.length <= 0) {
+      return <p>No films found</p>;
+    }
+
     return this.props.films.map((film) => {
       const { title, episode_id: id } = film;
 

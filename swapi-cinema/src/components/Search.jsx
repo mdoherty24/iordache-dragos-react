@@ -5,10 +5,34 @@ const baseUrl = 'https://swapi.dev/api/films';
 class Search extends Component {
   state = {
     busy: false,
+    searchTerm: '',
   };
 
   onSubmit = (event) => {
     event.preventDefault();
+
+    this.setState({
+      busy: true,
+    });
+
+    fetch(`${baseUrl}?search=${this.state.searchTerm}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then(({ results: films }) => {
+        this.setState({
+          busy: false,
+          searchTerm: '',
+        });
+
+        this.props.onSearchResults(films);
+      });
+  };
+
+  onInputChange = (event) => {
+    this.setState({
+      searchTerm: event.target.value,
+    });
   };
 
   render() {
@@ -23,6 +47,8 @@ class Search extends Component {
           name="q"
           placeholder="Search"
           onChange={this.onInputChange}
+          value={this.state.searchTerm}
+          disabled={this.state.busy}
           required
         ></input>
 
@@ -30,6 +56,7 @@ class Search extends Component {
           className="btn btn-outline-warning"
           type="submit"
           title="Search"
+          disabled={this.state.busy}
         >
           Search
         </button>

@@ -72,7 +72,13 @@ class App extends Component {
           <nav className="container d-flex justify-content-between">
             <h1 className="display-6 text-warning">Swapi Cinema</h1>
 
-            <Search></Search>
+            <Search
+              onSearchResults={(films) => {
+                this.setState({
+                  films,
+                });
+              }}
+            ></Search>
           </nav>
         </header>
 
