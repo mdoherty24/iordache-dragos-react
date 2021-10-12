@@ -9,6 +9,7 @@ class App extends Component {
     busy: true,
     films: [],
     errorMessage: '',
+    hasSearchResults: false,
   };
 
   getFilms() {
@@ -17,7 +18,7 @@ class App extends Component {
     });
 
     // promise chaining
-    fetch(baseUrl)
+    return fetch(baseUrl)
       .then((response) => {
         if (response.status === 404) {
           throw new Error('404');
@@ -39,12 +40,34 @@ class App extends Component {
       });
   }
 
+  clearSearchResults() {
+    this.getFilms().then(() => {
+      this.setState({
+        hasSearchResults: false,
+      });
+    });
+  }
+
   renderFilms() {
     return (
       <>
         <h2>Available films</h2>
 
         <Films films={this.state.films}></Films>
+        {this.state.hasSearchResults ? (
+          <button
+            className="btn btn-warning text-white"
+            title="See all movies"
+            type="button"
+            onClick={() => {
+              this.clearSearchResults();
+            }}
+          >
+            See all movies
+          </button>
+        ) : (
+          <></>
+        )}
       </>
     );
   }
@@ -71,13 +94,14 @@ class App extends Component {
         <header className="navbar-expand-md navbar-dark fixed-top bg-dark">
           <nav className="container d-flex justify-content-between">
             <h1 className="display-6 text-warning">Swapi Cinema</h1>
-
             <Search
               onSearchResults={(films) => {
                 this.setState({
                   films,
+                  hasSearchResults: true,
                 });
               }}
+              placeholder="Choose a SW movie"
             ></Search>
           </nav>
         </header>
