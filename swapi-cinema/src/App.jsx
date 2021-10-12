@@ -1,4 +1,5 @@
 import { Component, Fragment } from 'react';
+import Film from './components/Film';
 import Films from './components/Films';
 import Search from './components/Search';
 
@@ -10,6 +11,7 @@ class App extends Component {
     films: [],
     errorMessage: '',
     hasSearchResults: false,
+    selectedFilm: null,
   };
 
   getFilms() {
@@ -53,7 +55,14 @@ class App extends Component {
       <>
         <h2>Available films</h2>
 
-        <Films films={this.state.films}></Films>
+        <Films
+          films={this.state.films}
+          selectFilm={(film) => {
+            this.setState({
+              selectedFilm: film,
+            });
+          }}
+        ></Films>
         {this.state.hasSearchResults ? (
           <button
             className="btn btn-warning text-white"
@@ -72,6 +81,19 @@ class App extends Component {
     );
   }
 
+  renderFilm() {
+    return (
+      <Film
+        film={this.state.selectedFilm}
+        deselectFilm={() => {
+          this.setState({
+            selectedFilm: null,
+          });
+        }}
+      ></Film>
+    );
+  }
+
   renderMainScreen() {
     if (this.state.busy === true) {
       return <>... loading</>;
@@ -81,7 +103,9 @@ class App extends Component {
       return <>{this.state.errorMessage}</>;
     }
 
-    return this.renderFilms();
+    return this.state.selectedFilm !== null
+      ? this.renderFilm()
+      : this.renderFilms();
   }
 
   componentDidMount() {
@@ -99,6 +123,7 @@ class App extends Component {
                 this.setState({
                   films,
                   hasSearchResults: true,
+                  selectedFilm: null,
                 });
               }}
               placeholder="Choose a SW movie"
