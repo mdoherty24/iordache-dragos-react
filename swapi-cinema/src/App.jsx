@@ -1,6 +1,7 @@
 import { Component, Fragment } from 'react';
 import Film from './components/Film';
 import Films from './components/Films';
+import PurchaseFilm from './components/PurchaseFilm';
 import Search from './components/Search';
 
 const baseUrl = 'https://swapi.dev/api/films';
@@ -12,6 +13,7 @@ class App extends Component {
     errorMessage: '',
     hasSearchResults: false,
     selectedFilm: null,
+    purchasing: false,
   };
 
   getFilms() {
@@ -62,6 +64,12 @@ class App extends Component {
               selectedFilm: film,
             });
           }}
+          purchaseFilm={(film) => {
+            this.setState({
+              selectedFilm: film,
+              purchasing: true,
+            });
+          }}
         ></Films>
         {this.state.hasSearchResults ? (
           <button
@@ -101,6 +109,10 @@ class App extends Component {
 
     if (this.state.busy === false && this.state.errorMessage.length > 0) {
       return <>{this.state.errorMessage}</>;
+    }
+
+    if (this.state.purchasing === true) {
+      return <PurchaseFilm film={this.state.selectedFilm}></PurchaseFilm>;
     }
 
     return this.state.selectedFilm !== null

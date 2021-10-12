@@ -34,6 +34,9 @@ class Films extends Component {
               className="btn btn-sm btn-warning"
               type="button"
               title={`Buy tickets to ${title}`}
+              onClick={() => {
+                this.props.purchaseFilm(film);
+              }}
             >
               Buy Tickets
             </button>
