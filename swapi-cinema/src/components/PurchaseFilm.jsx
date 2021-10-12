@@ -6,16 +6,48 @@ const columns = 10;
 const ticketPrice = 3;
 
 class PurchaseFilm extends Component {
+  state = {
+    selectedSeats: new Set(),
+  };
+
+  toggleSeatSelect(seatKey) {
+    const selectedSeats = new Set(this.state.selectedSeats);
+
+    if (selectedSeats.has(seatKey)) {
+      selectedSeats.delete(seatKey);
+    } else {
+      selectedSeats.add(seatKey);
+    }
+
+    this.setState({
+      selectedSeats,
+    });
+  }
+
   renderSeats() {
     const seats = [];
+    console.log(this.state);
 
     for (let i = 0; i < rows.length; i++) {
       for (let j = 1; j <= 10; j++) {
-        // A1 B4 C8
+        // A-1 B-4 C-8
         const seatKey = `${rows[i]}-${j}`;
-        const cssClasses = `btn btn-sm py-2 btn-outline-dark`;
+        const seatSelected = this.state.selectedSeats.has(seatKey);
+        const cssClasses = `btn btn-sm py-2 ${
+          seatSelected ? 'btn-warning' : 'btn-outline-dark'
+        }`;
 
-        seats.push(<button className={cssClasses} key={seatKey}></button>);
+        seats.push(
+          <button
+            className={cssClasses}
+            key={seatKey}
+            type="button"
+            title={seatKey}
+            onClick={() => {
+              this.toggleSeatSelect(seatKey);
+            }}
+          ></button>,
+        );
       }
     }
 
