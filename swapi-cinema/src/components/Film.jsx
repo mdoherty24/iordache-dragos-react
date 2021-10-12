@@ -48,6 +48,9 @@ class Film extends Component {
             className="btn btn-warning text-white"
             type="button"
             title={buyButtonTitle}
+            onClick={() => {
+              this.props.purchaseFilm();
+            }}
           >
             {buyButtonTitle}
           </button>

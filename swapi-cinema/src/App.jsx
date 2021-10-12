@@ -98,6 +98,11 @@ class App extends Component {
             selectedFilm: null,
           });
         }}
+        purchaseFilm={() => {
+          this.setState({
+            purchasing: true,
+          });
+        }}
       ></Film>
     );
   }
