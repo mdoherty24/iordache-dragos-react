@@ -112,7 +112,17 @@ class App extends Component {
     }
 
     if (this.state.purchasing === true) {
-      return <PurchaseFilm film={this.state.selectedFilm}></PurchaseFilm>;
+      return (
+        <PurchaseFilm
+          film={this.state.selectedFilm}
+          cancelPurchase={() => {
+            this.setState({
+              purchasing: false,
+              selectedFilm: null,
+            });
+          }}
+        ></PurchaseFilm>
+      );
     }
 
     return this.state.selectedFilm !== null
