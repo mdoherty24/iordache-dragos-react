@@ -23,14 +23,6 @@ const App = () => {
       </header>
 
       <main className="container mt-7 mb-4">
-        <button
-          onClick={() => {
-            dispatch({ type: 'setScreen', payload: 'productPage' });
-          }}
-        >
-          TO products!
-        </button>
-
         <Screen screen={currentScreen}></Screen>
       </main>
 
