@@ -6,7 +6,10 @@ const componentMap = {
   productPage: Product,
 };
 
-export const Screen = ({ screen = 'home' }) => {
+// props = {screen: 'home'}
+// props.screen
+// props->screen
+export const Screen = ({ screen = '' }) => {
   if (!screen || typeof componentMap[screen] === 'undefined') {
     return <componentMap.home></componentMap.home>;
   }
