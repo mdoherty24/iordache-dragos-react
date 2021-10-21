@@ -1,11 +1,13 @@
 import Products from './Products';
 import Product from './Product';
 import SearchResults from './SearchResults';
+import Cart from './Cart';
 
 const componentMap = {
   home: Products,
   productPage: Product,
   searchResults: SearchResults,
+  cart: Cart,
 };
 
 // props = {screen: 'home'}
