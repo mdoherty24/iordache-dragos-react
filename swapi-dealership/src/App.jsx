@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import FooterNav from './components/FooterNav';
 import Screen from './components/Screen';
 import { AppContext, appState, appStateReducer } from './contexts/AppContext';
 import Search from './legacy/Search';
@@ -26,7 +27,9 @@ const App = () => {
         <Screen screen={currentScreen}></Screen>
       </main>
 
-      <footer className="container mb-4">FOoter</footer>
+      <footer className="container mb-4">
+        <FooterNav></FooterNav>
+      </footer>
     </AppContext.Provider>
   );
 };

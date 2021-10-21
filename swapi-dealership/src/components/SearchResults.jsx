@@ -7,8 +7,24 @@ export const SearchResults = () => {
   const { searchResults } = state;
 
   const renderResults = () => {
+    if (searchResults.length <= 0) {
+      return <p>No products found.</p>;
+    }
+
     return searchResults.map((product) => {
       return <ProductTile product={product} key={product.name}></ProductTile>;
+    });
+  };
+
+  const navigate = () => {
+    dispatch({
+      type: 'setScreen',
+      payload: 'home',
+    });
+
+    dispatch({
+      type: 'setSearchResults',
+      payload: [],
     });
   };
 
@@ -21,7 +37,12 @@ export const SearchResults = () => {
       {renderResults()}
 
       <div className="col-12 mt-2 text-center">
-        <button className="btn btn-outline-warning" title="Back" type="button">
+        <button
+          onClick={navigate}
+          className="btn btn-outline-warning"
+          title="Back"
+          type="button"
+        >
           Back
         </button>
       </div>
