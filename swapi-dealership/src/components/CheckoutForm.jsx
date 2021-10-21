@@ -1,4 +1,27 @@
-export const CheckoutForm = () => {
+import { useState } from 'react';
+
+export const CheckoutForm = ({ onSubmit = () => {} }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    address1: '',
+    address2: '',
+    planet: '',
+    terms: false,
+  });
+  const { name, surname, email, address1, address2, planet, terms } = formData;
+
+  const onChange = ({ target }) => {
+    const { name, value } = target;
+    const newState = {
+      ...formData,
+      [name]: value,
+    };
+
+    setFormData(newState);
+  };
+
   return (
     <form
       onSubmit={(event) => {

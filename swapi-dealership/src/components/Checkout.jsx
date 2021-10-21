@@ -9,6 +9,10 @@ export const Checkout = () => {
     dispatch,
   } = useContext(AppContext);
 
+  const placeOrder = (formData) => {
+    console.log('send to', formData);
+  };
+
   return (
     <section className="row">
       <header className="col-12 mb-4">
@@ -16,7 +20,11 @@ export const Checkout = () => {
       </header>
 
       <section className="col-12 col-md-8">
-        <CheckoutForm></CheckoutForm>
+        <CheckoutForm
+          onSubmit={(formData) => {
+            placeOrder(formData);
+          }}
+        ></CheckoutForm>
       </section>
 
       <footer className="col-12 col-md-4">
