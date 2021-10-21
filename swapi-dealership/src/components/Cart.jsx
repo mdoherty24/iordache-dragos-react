@@ -8,6 +8,13 @@ export const Cart = () => {
     dispatch,
   } = useContext(AppContext);
 
+  const navigateToCheckout = () => {
+    dispatch({
+      type: 'setScreen',
+      payload: 'checkout',
+    });
+  };
+
   return (
     <section className="row">
       <header className="col-12">
@@ -23,6 +30,7 @@ export const Cart = () => {
           className="btn btn-warning"
           type="button"
           title="Proceed to checkout"
+          onClick={navigateToCheckout}
         >
           Proceed to checkout
         </button>
