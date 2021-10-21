@@ -5,6 +5,7 @@ export const AppContext = createContext();
 export const appState = {
   currentScreen: 'home',
   selected: null,
+  searchResults: [],
 };
 
 export const appStateReducer = (appState, { type, payload }) => {
@@ -20,6 +21,13 @@ export const appStateReducer = (appState, { type, payload }) => {
     return {
       ...appState,
       selected: payload,
+    };
+  }
+
+  if (type === 'setSearchResults') {
+    return {
+      ...appState,
+      searchResults: payload,
     };
   }
 

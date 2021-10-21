@@ -1,9 +1,11 @@
 import Products from './Products';
 import Product from './Product';
+import SearchResults from './SearchResults';
 
 const componentMap = {
   home: Products,
   productPage: Product,
+  searchResults: SearchResults,
 };
 
 // props = {screen: 'home'}
