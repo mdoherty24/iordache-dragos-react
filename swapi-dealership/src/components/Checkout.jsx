@@ -10,7 +10,13 @@ export const Checkout = () => {
   } = useContext(AppContext);
 
   const placeOrder = (formData) => {
-    console.log('send to', formData);
+    dispatch({
+      type: 'setOrder',
+      payload: {
+        address: formData,
+        items: [...cart], // cart.slice()
+      },
+    });
   };
 
   return (
