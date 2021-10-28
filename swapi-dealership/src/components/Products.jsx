@@ -8,6 +8,7 @@ export const Products = () => {
   const [busy, setBusy] = useState(true);
   const [urlToFetch, setUrlToFetch] = useState(baseUrl);
   const nextUrl = useRef('');
+  const loadMoreRef = useRef(null);
 
   // recipe
   const fetchProducts = useCallback(() => {
@@ -24,7 +25,10 @@ export const Products = () => {
         // nullish coalescing operator:
         nextUrl.current = data?.next ?? '';
 
-        setProducts([...products, ...newProducts]);
+        // closure functions
+        setProducts((products) => {
+          return [...products, ...newProducts];
+        });
         setBusy(false);
       });
   }, [urlToFetch]);
@@ -33,6 +37,29 @@ export const Products = () => {
     fetchProducts();
   }, [fetchProducts]);
   // end recipe
+
+  useEffect(() => {
+    // defining options
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    };
+    // instantiating the observer
+    const observer = new IntersectionObserver((entries) => {
+      const intersectionObserverEntry = entries[0];
+
+      if (
+        intersectionObserverEntry.isIntersecting &&
+        nextUrl.current.length > 0
+      ) {
+        setUrlToFetch(nextUrl.current);
+      }
+    }, options);
+    // listening to the intersection events (observing)
+    observer.observe(loadMoreRef.current);
+    // provide cleanup function
+  }, []);
 
   return (
     <section className="row">
@@ -46,11 +73,11 @@ export const Products = () => {
         return <ProductTile product={product} key={name}></ProductTile>;
       })}
 
-      <div className="col-12 text-center">
+      <div className="col-12 text-center" ref={loadMoreRef}>
         {nextUrl.current.length > 0 ? (
           <button
             className="btn btn-xl btn-warning"
-            title="Load more"
+            title="Load more products"
             type="button"
             disabled={busy}
             onClick={() => {
