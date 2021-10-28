@@ -129,12 +129,25 @@ export const Product = () => {
           </button>
 
           <button
-            className="btn btn-seocndary btn-sm"
+            className="btn btn-secondary btn-sm"
             title="Continue shopping"
             type="button"
             onClick={navigateHome}
           >
             Continue shopping
+          </button>
+        </div>
+
+        <div className="text-end mt-2">
+          <button
+            className="btn btn-danger btn-xl"
+            type="button"
+            title="CLOSE DIALOG"
+            onClick={() => {
+              setIsDialogOpen(false);
+            }}
+          >
+            Close
           </button>
         </div>
       </Dialog>
