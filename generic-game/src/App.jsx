@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { clickClicker } from './actions/creators/ui';
+import { clickClicker, decrementClicker } from './actions/creators/ui';
 import { Footer, Header } from './components/common';
 // import { STH, STH } from './actions/types/ui';
 // import {dispatchState} from './actions/creators/ui';
@@ -17,6 +17,13 @@ export const App = () => {
       <Header></Header>
       <main>
         <div>Value is: {clicker}</div>
+        <button
+          onClick={() => {
+            dispatch(decrementClicker());
+          }}
+        >
+          Decrement
+        </button>
         <button
           onClick={() => {
             dispatch(clickClicker());
