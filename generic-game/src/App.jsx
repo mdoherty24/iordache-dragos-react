@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { clickClicker, decrementClicker } from './actions/creators/ui';
+import { initializeGoogleAuth } from './api';
 import { Footer, Header } from './components/common';
 // import { STH, STH } from './actions/types/ui';
 // import {dispatchState} from './actions/creators/ui';
+
+initializeGoogleAuth();
 
 export const App = () => {
   const clicker = useSelector((state) => {
