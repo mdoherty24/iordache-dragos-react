@@ -5,6 +5,7 @@ import { Footer, Header } from './components/common';
 // import { STH, STH } from './actions/types/ui';
 // import {dispatchState} from './actions/creators/ui';
 
+// async
 initializeGoogleAuth();
 
 export const App = () => {

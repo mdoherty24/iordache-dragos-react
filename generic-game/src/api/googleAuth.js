@@ -1,3 +1,6 @@
+import { login, logout } from '../actions/creators/auth';
+import store from './../store';
+
 let eventBound = false;
 
 // recipe
@@ -34,8 +37,20 @@ export const initializeGoogleAuth = async () => {
 
 const authenticationChangeHandler = (isAuthenticated, googleUser) => {
   if (isAuthenticated) {
-    console.log('logged in', googleUser);
+    const user = googleUser.getBasicProfile();
+
+    store.dispatch(login(buildGoogleUserBasicProfile(user)));
   } else {
-    console.log('not logged in');
+    store.dispatch(logout());
   }
+};
+
+const buildGoogleUserBasicProfile = (googleUser) => {
+  return {
+    id: googleUser.getId(),
+    firstName: googleUser.getGivenName(),
+    lastName: googleUser.getFamilyName(),
+    email: googleUser.getEmail(),
+    avatar: googleUser.getImageUrl(),
+  };
 };
