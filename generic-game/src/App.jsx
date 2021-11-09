@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Header></Header>
-      <main>
+      <main className="flex-grow">
         <Switch>
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/profile" component={ProfilePage}></Route>
