@@ -1,4 +1,4 @@
-// barell functions might not work with React Suspense
+// barell files might not work with React Suspense
 export * from './HomePage';
 export * from './NotFoundPage';
 export * from './ProfilePage';
