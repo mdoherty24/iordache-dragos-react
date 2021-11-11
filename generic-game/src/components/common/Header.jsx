@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../ui/Button';
 import { requestSignIn } from '../../actions/creators/auth';
+import { FaUserAlt } from 'react-icons/fa';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,25 @@ export const Header = () => {
 
   const renderUserControls = () => {
     if (authenticated) {
-      return 'user is logged in';
+      return (
+        <>
+          <Link to="/profile" title="Profile">
+            <Button element="span" className="inline-flex h-full items-center">
+              <FaUserAlt></FaUserAlt>
+            </Button>
+          </Link>
+
+          <Button
+            skin="primaryInverted"
+            type="button"
+            title="Log out"
+            onClick={() => {}}
+            className="ml-2"
+          >
+            Log out
+          </Button>
+        </>
+      );
     } else {
       return (
         <Button
@@ -41,7 +60,7 @@ export const Header = () => {
           </h1>
         </header>
 
-        {renderUserControls()}
+        <div>{renderUserControls()}</div>
       </div>
     </header>
   );
