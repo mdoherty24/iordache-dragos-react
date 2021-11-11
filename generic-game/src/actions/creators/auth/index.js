@@ -1,3 +1,4 @@
+import { initializeGoogleAuth } from '../../../api/googleAuth';
 import { AUTH_LOGOUT, AUTH_LOGIN } from './../../types/auth';
 
 export const login = (user) => {
@@ -10,5 +11,13 @@ export const login = (user) => {
 export const logout = () => {
   return {
     type: AUTH_LOGOUT,
+  };
+};
+
+export const requestSignIn = () => {
+  return async () => {
+    return initializeGoogleAuth().then((GoogleAuth) => {
+      GoogleAuth.signIn();
+    });
   };
 };

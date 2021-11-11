@@ -1,14 +1,31 @@
 import { SiLetterboxd } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Button from '../ui/Button';
+import { requestSignIn } from '../../actions/creators/auth';
 
 export const Header = () => {
-  const renderUserControls = () => {
-    const authenticated = true;
+  const dispatch = useDispatch();
+  const authenticated = useSelector((state) => {
+    return state.auth.authenticated;
+  });
 
+  const renderUserControls = () => {
     if (authenticated) {
       return 'user is logged in';
     } else {
-      return 'user is not logged in';
+      return (
+        <Button
+          type="button"
+          title="Log in"
+          onClick={() => {
+            dispatch(requestSignIn());
+          }}
+          className="drilldown demo"
+        >
+          Log in
+        </Button>
+      );
     }
   };
 
