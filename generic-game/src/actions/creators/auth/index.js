@@ -21,3 +21,11 @@ export const requestSignIn = () => {
     });
   };
 };
+
+export const requestSignOut = () => {
+  return async () => {
+    return initializeGoogleAuth().then((GoogleAuth) => {
+      GoogleAuth.signOut();
+    });
+  };
+};

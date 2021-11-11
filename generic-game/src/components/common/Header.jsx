@@ -1,17 +1,21 @@
 import { SiLetterboxd } from 'react-icons/si';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Button from '../ui/Button';
-import { requestSignIn } from '../../actions/creators/auth';
+import { requestSignOut, requestSignIn } from '../../actions/creators/auth';
 import { FaUserAlt } from 'react-icons/fa';
+import { CgSpinnerTwo } from 'react-icons/cg';
+import { useAuth } from './../../hooks';
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const authenticated = useSelector((state) => {
-    return state.auth.authenticated;
-  });
+  const { authenticated, established } = useAuth();
 
   const renderUserControls = () => {
+    if (!established) {
+      return <CgSpinnerTwo className="animate-spin"></CgSpinnerTwo>;
+    }
+
     if (authenticated) {
       return (
         <>
@@ -25,7 +29,9 @@ export const Header = () => {
             skin="primaryInverted"
             type="button"
             title="Log out"
-            onClick={() => {}}
+            onClick={() => {
+              dispatch(requestSignOut());
+            }}
             className="ml-2"
           >
             Log out
