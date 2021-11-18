@@ -1,5 +1,5 @@
 import { initializeGoogleAuth } from '../../../api/googleAuth';
-import { getUserStats, postUserStats } from '../profile';
+import { getUserProfile, getUserStats, postUserStats } from '../profile';
 import { AUTH_LOGOUT, AUTH_LOGIN } from './../../types/auth';
 
 export const login = (user) => {
@@ -11,8 +11,24 @@ export const login = (user) => {
     // if not, create
     try {
       await dispatch(getUserStats(id));
-    } catch (error) {
-      await dispatch(postUserStats(id));
+    } catch (response) {
+      const { status: httpStatus } = response;
+
+      if (httpStatus === 404) {
+        await dispatch(postUserStats(id));
+      }
+
+      // do more error handling
+    }
+
+    // read profile
+    // determine if user has a profile
+    // if not, create
+    try {
+      // dispatch getUserProfile
+      dispatch(getUserProfile(id));
+    } catch (response) {
+      // dipatch postUserProfile
     }
 
     dispatch(setLogin(user));
