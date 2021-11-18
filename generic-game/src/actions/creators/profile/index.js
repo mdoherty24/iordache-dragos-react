@@ -1,4 +1,9 @@
-import { createUser, readProfile, readUser } from '../../../api/users';
+import {
+  createProfile,
+  createUser,
+  readProfile,
+  readUser,
+} from '../../../api/users';
 import { PROFILE_SET_STATS } from '../../types/profile';
 
 // getUserStats
@@ -39,8 +44,17 @@ export const getUserProfile = (userId) => {
       // set colors in state
 
       return creatureColors;
-    } catch (_) {
-      return Promise.reject();
+    } catch (error) {
+      const response = error.response;
+      return Promise.reject(response);
     }
+  };
+};
+
+export const postUserProfile = (userId) => {
+  return async (_, getState) => {
+    const { profile } = getState();
+
+    await createProfile(userId, profile.creature);
   };
 };

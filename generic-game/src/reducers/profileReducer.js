@@ -6,6 +6,11 @@ const initialState = {
     gamesLost: 0,
     gamesPlayed: 0,
   },
+  creature: {
+    mainColor: '#ffabce',
+    secondaryColor: '#ff7bad',
+    eyeColor: '#000000',
+  },
 };
 
 const profileReducer = (state = initialState, { type, payload }) => {

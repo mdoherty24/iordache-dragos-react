@@ -1,5 +1,10 @@
 import { initializeGoogleAuth } from '../../../api/googleAuth';
-import { getUserProfile, getUserStats, postUserStats } from '../profile';
+import {
+  getUserProfile,
+  getUserStats,
+  postUserProfile,
+  postUserStats,
+} from '../profile';
 import { AUTH_LOGOUT, AUTH_LOGIN } from './../../types/auth';
 
 export const login = (user) => {
@@ -26,9 +31,10 @@ export const login = (user) => {
     // if not, create
     try {
       // dispatch getUserProfile
-      dispatch(getUserProfile(id));
+      await dispatch(getUserProfile(id));
     } catch (response) {
-      // dipatch postUserProfile
+      // dispatch postUserProfile
+      await dispatch(postUserProfile(id));
     }
 
     dispatch(setLogin(user));

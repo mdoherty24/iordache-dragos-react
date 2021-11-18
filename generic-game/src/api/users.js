@@ -43,7 +43,7 @@ export const createProfile = async (userId, colors) => {
     creature: colors,
   };
 
-  return await usersApi.post(`/profiles/${userId}`);
+  return await usersApi.post(`/profiles`, payload);
 };
 
 // readProfile
