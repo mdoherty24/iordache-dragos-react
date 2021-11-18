@@ -29,7 +29,7 @@ export const readUser = async (userId) => {
   const { data } = await usersApi.get(endpoint);
 
   if (data) {
-    return data;
+    return data.stats;
   }
 
   return undefined;
