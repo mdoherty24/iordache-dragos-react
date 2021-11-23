@@ -59,5 +59,12 @@ export const readProfile = async (userId) => {
 };
 
 // updateProfile
+export const updateProfile = async (userId, colors) => {
+  const payload = {
+    creature: colors,
+  };
+
+  return await usersApi.patch(`/profiles/${userId}`, payload);
+};
 
 export default usersApi;

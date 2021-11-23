@@ -3,6 +3,7 @@ import {
   createUser,
   readProfile,
   readUser,
+  updateProfile,
 } from '../../../api/users';
 import { PROFILE_SET_COLOR, PROFILE_SET_STATS } from '../../types/profile';
 
@@ -66,5 +67,11 @@ export const setCreatureColor = (targetProperty, color) => {
       targetProperty,
       color,
     },
+  };
+};
+
+export const patchUserProfile = (userId, colors) => {
+  return async () => {
+    await updateProfile(userId, colors);
   };
 };
