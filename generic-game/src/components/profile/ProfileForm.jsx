@@ -14,6 +14,14 @@ export const ProfileForm = () => {
     event.preventDefault();
   };
 
+  const onColorPickerChange = (event) => {
+    const element = event.target;
+    const targetProperty = element.name;
+    const colorValue = element.value;
+
+    // dispatch to state
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <div className="mb-4 flex justify-between">

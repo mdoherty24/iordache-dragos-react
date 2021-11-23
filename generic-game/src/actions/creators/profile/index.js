@@ -4,7 +4,7 @@ import {
   readProfile,
   readUser,
 } from '../../../api/users';
-import { PROFILE_SET_STATS } from '../../types/profile';
+import { PROFILE_SET_COLOR, PROFILE_SET_STATS } from '../../types/profile';
 
 // getUserStats
 export const getUserStats = (userId) => {
@@ -56,5 +56,15 @@ export const postUserProfile = (userId) => {
     const { profile } = getState();
 
     await createProfile(userId, profile.creature);
+  };
+};
+
+export const setCreatureColor = (targetProperty, color) => {
+  return {
+    type: PROFILE_SET_COLOR,
+    payload: {
+      targetProperty,
+      color,
+    },
   };
 };
