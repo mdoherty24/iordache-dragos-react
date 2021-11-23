@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCreatureColor } from '../../actions/creators/profile';
 import { Button } from './../ui';
 // import {Spinner} from './../ui/loaders'
 // import {Input, Select, Checkbox} from './../ui/forms'
@@ -9,6 +10,8 @@ export const ProfileForm = () => {
 
     return creature;
   });
+  // dispatch
+  const x = useDispatch();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -20,6 +23,7 @@ export const ProfileForm = () => {
     const colorValue = element.value;
 
     // dispatch to state
+    x(setCreatureColor(targetProperty, colorValue));
   };
 
   return (
