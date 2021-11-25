@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux';
+import { useProfileColors } from '../../hooks';
 import './Creature.css';
 
 export const Creature = () => {
-  const { mainColor, secondaryColor, eyeColor } = useSelector(({ profile }) => {
-    return profile.creature;
-  });
+  const { mainColor, secondaryColor, eyeColor } = useProfileColors();
 
   return (
     <div
