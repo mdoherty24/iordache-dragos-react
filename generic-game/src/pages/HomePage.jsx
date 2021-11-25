@@ -1,14 +1,23 @@
-import { useAuth } from '../hooks';
+import { UserStats } from '../components/profile';
+import { useAuth, useStats } from '../hooks';
 
 export const HomePage = () => {
   const { authenticated, established } = useAuth();
+  const stats = useStats();
+
+  // statsExample = {
+  //   gamesWon,
+  //   gamesLost,
+  //   gamesPlayed,
+  // }
 
   return (
     <div className="p-4 container mx-auto">
+      <h1>Welcome to Word Game</h1>
       {!established ? (
         '...add spinner here'
       ) : authenticated ? (
-        'user logged in'
+        <UserStats {...stats} className="mt-8" entryClassName="p-5"></UserStats>
       ) : (
         <div className="text-center">
           <button
