@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { patchGameLost, patchGameWon } from '../actions/creators/profile';
 import { Authorize } from '../components/auth';
 import { Creature } from '../components/profile';
 import { Button } from '../components/ui';
+import { gameEnded, gameStarted } from './../actions/creators/game';
 
 export const GamePage = () => {
-  const [gameState, setGameState] = useState({
-    playing: false,
+  const dispatch = useDispatch();
+  const { playing } = useSelector(({ game }) => {
+    return game;
   });
-  const { playing } = gameState;
 
   return (
     <div className="p-4 container flex mx-auto">
@@ -15,14 +17,23 @@ export const GamePage = () => {
         <div className="w-full mb-2 md:w-8/12 flex items-center justify-around">
           {playing ? (
             <>
-              <Button title="Win game" type="button" onClick={() => {}}>
+              <Button
+                title="Win game"
+                type="button"
+                onClick={() => {
+                  dispatch(patchGameWon());
+                  dispatch(gameEnded());
+                }}
+              >
                 Win game
               </Button>
               <Button
                 title="Lose game"
                 type="button"
                 skin="dangerInverted"
-                onClick={() => {}}
+                onClick={() => {
+                  dispatch(gameEnded());
+                }}
               >
                 Lose game
               </Button>
@@ -31,9 +42,7 @@ export const GamePage = () => {
                 type="button"
                 skin="danger"
                 onClick={() => {
-                  setGameState({
-                    playing: false,
-                  });
+                  dispatch(gameEnded());
                 }}
               >
                 Quit
@@ -44,9 +53,8 @@ export const GamePage = () => {
               title="Start Game"
               type="button"
               onClick={() => {
-                setGameState({
-                  playing: true,
-                });
+                dispatch(patchGameLost());
+                dispatch(gameStarted());
               }}
             >
               Start Game
