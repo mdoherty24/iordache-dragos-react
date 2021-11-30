@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { UserStats } from '../components/profile';
+import { Button } from '../components/ui';
 import { useAuth, useStats } from '../hooks';
 
 export const HomePage = () => {
@@ -17,7 +19,20 @@ export const HomePage = () => {
       {!established ? (
         '...add spinner here'
       ) : authenticated ? (
-        <UserStats {...stats} className="mt-8" entryClassName="p-5"></UserStats>
+        <>
+          <UserStats
+            {...stats}
+            className="mt-8"
+            entryClassName="p-5"
+          ></UserStats>
+          <div className="mt-2 text-center">
+            <Link to="/play">
+              <Button title="Play nao" element="span">
+                Play
+              </Button>
+            </Link>
+          </div>
+        </>
       ) : (
         <div className="text-center">
           <button
