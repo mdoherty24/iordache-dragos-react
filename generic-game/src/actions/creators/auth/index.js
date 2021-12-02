@@ -107,9 +107,14 @@ export const getUser = (userId, force = false) => {
     }
 
     try {
-      const user = await readUser(userId);
+      const stats = await readUser(userId);
 
-      dispatch(setUser(user));
+      dispatch(
+        setUser({
+          id: userId,
+          stats,
+        }),
+      );
     } catch (response) {
       console.log(response);
     }

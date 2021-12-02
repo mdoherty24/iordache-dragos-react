@@ -1,4 +1,4 @@
-import { SET_USERS } from '../actions/types/auth';
+import { SET_USER, SET_USERS } from '../actions/types/auth';
 
 /*
  * {
@@ -34,6 +34,14 @@ const usersReducer = (state = initialState, { type, payload }) => {
         ...state,
         entities: users,
         cached: true,
+      };
+    case SET_USER:
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [payload.id]: payload,
+        },
       };
     default:
       return state;
