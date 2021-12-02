@@ -1,11 +1,12 @@
 import { initializeGoogleAuth } from '../../../api/googleAuth';
+import { readUsers } from '../../../api/users';
 import {
   getUserProfile,
   getUserStats,
   postUserProfile,
   postUserStats,
 } from '../profile';
-import { AUTH_LOGOUT, AUTH_LOGIN } from './../../types/auth';
+import { AUTH_LOGOUT, AUTH_LOGIN, SET_USERS } from './../../types/auth';
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -67,5 +68,33 @@ export const requestSignOut = () => {
     return initializeGoogleAuth().then((GoogleAuth) => {
       GoogleAuth.signOut();
     });
+  };
+};
+
+// should be in a users slice!!!
+export const getUsers = (force = false) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const cached = state.users.cached;
+
+    if (cached === true && force === false) {
+      return;
+    }
+
+    try {
+      const users = await readUsers();
+
+      dispatch(setUsers(users));
+    } catch (response) {
+      console.log(response);
+    }
+  };
+};
+
+// should be in a users slice!!!
+export const setUsers = (users) => {
+  return {
+    type: SET_USERS,
+    payload: users,
   };
 };
