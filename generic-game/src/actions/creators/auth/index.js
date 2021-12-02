@@ -1,12 +1,17 @@
 import { initializeGoogleAuth } from '../../../api/googleAuth';
-import { readUsers } from '../../../api/users';
+import { readUser, readUsers } from '../../../api/users';
 import {
   getUserProfile,
   getUserStats,
   postUserProfile,
   postUserStats,
 } from '../profile';
-import { AUTH_LOGOUT, AUTH_LOGIN, SET_USERS } from './../../types/auth';
+import {
+  AUTH_LOGOUT,
+  AUTH_LOGIN,
+  SET_USERS,
+  SET_USER,
+} from './../../types/auth';
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -91,10 +96,38 @@ export const getUsers = (force = false) => {
   };
 };
 
+// shuld be in user slice
+export const getUser = (userId, force = false) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const user = state.users.entities[userId];
+
+    if (user !== undefined && force === false) {
+      return;
+    }
+
+    try {
+      const user = await readUser(userId);
+
+      dispatch(setUser(user));
+    } catch (response) {
+      console.log(response);
+    }
+  };
+};
+
 // should be in a users slice!!!
 export const setUsers = (users) => {
   return {
     type: SET_USERS,
     payload: users,
+  };
+};
+
+// should be in a users slice!!!
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user,
   };
 };
