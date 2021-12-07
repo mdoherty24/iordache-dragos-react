@@ -21,7 +21,7 @@ if (isBrowser() && process.env.NEXT_PUBLIC_ENV === 'dev') {
 }
 
 const initStore = (preloadedState = initialState) => {
-  return createStore(rootReducer, preloadedState);
+  return createStore(rootReducer, preloadedState, composeEnhancer());
 };
 
 export const initializeStore = (preloadedState) => {

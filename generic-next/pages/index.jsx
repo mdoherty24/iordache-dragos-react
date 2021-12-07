@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { Films } from '../components/Films';
 import { decrement, increment } from '../store/ui/uiSlice';
 
 export default function Home({ hello, films }) {
