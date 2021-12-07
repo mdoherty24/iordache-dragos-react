@@ -63,6 +63,11 @@ export const getServerSideProps = async () => {
     props: {
       hello: 'world',
       films: [],
+      initialReduxState: {
+        ui: {
+          count: 42,
+        },
+      },
     },
   };
 };
