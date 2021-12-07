@@ -1,7 +1,12 @@
 import Head from 'next/head';
+import { useSelector } from 'react-redux';
 import { Films } from '../components/Films';
 
 export default function Home({ hello, films }) {
+  const count = useSelector(({ ui }) => {
+    return ui.count;
+  });
+
   return (
     <>
       <Head>
@@ -16,8 +21,7 @@ export default function Home({ hello, films }) {
 
         <main className="container mx-auto py-4 flex-grow">
           insert forms
-          <h2 className="text-2xl text-purple-900 mt-4">SSR test</h2>
-          <Films films={films}></Films>
+          <div>{count}</div>
         </main>
 
         <footer className="container mx-auto py-4">Footer</footer>
@@ -27,13 +31,13 @@ export default function Home({ hello, films }) {
 }
 
 export const getServerSideProps = async () => {
-  const response = await fetch('https://swapi.dev/api/films');
-  const data = await response.json();
+  // const response = await fetch('https://swapi.dev/api/films');
+  // const data = await response.json();
 
   return {
     props: {
       hello: 'world',
-      films: data.results,
+      films: [],
     },
   };
 };

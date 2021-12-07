@@ -18,7 +18,11 @@ export const getServerSideProps = async () => {
   let pageProps = {};
 
   // feed redux state on the backend
-  pageProps.initalReduxState = {};
+  pageProps.initalReduxState = {
+    ui: {
+      count: 36,
+    },
+  };
 
   return {
     pageProps,
