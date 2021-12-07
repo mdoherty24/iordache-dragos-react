@@ -7,6 +7,10 @@ export default function Home({ hello, films }) {
   const count = useSelector(({ ui }) => {
     return ui.count;
   });
+
+  const { authenticated } = useSelector(({ auth }) => {
+    return auth;
+  });
   const dispatch = useDispatch();
 
   return (
@@ -19,6 +23,9 @@ export default function Home({ hello, films }) {
         <header className="container mx-auto py-4">
           Menu
           {hello}
+          <div className="mt-4">
+            User is {authenticated ? 'logged in' : 'logged out'}
+          </div>
         </header>
 
         <main className="container mx-auto py-4 flex-grow">
