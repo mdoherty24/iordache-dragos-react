@@ -1,11 +1,13 @@
 import Head from 'next/head';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Films } from '../components/Films';
+import { decrement, increment } from '../store/ui/uiSlice';
 
 export default function Home({ hello, films }) {
   const count = useSelector(({ ui }) => {
     return ui.count;
   });
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -21,7 +23,23 @@ export default function Home({ hello, films }) {
 
         <main className="container mx-auto py-4 flex-grow">
           insert forms
-          <div>{count}</div>
+          <div className="mt-16">
+            <button
+              onClick={() => {
+                dispatch(decrement());
+              }}
+            >
+              Decrement
+            </button>
+            <div>{count}</div>
+            <button
+              onClick={() => {
+                dispatch(increment());
+              }}
+            >
+              Increment
+            </button>
+          </div>
         </main>
 
         <footer className="container mx-auto py-4">Footer</footer>
