@@ -9,7 +9,7 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async ({ name, email, password }, { dispatch }) => {
+  async ({ name, email, password }) => {
     const credentials = await register(name, email, password);
   },
 );
