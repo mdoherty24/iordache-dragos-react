@@ -48,6 +48,16 @@ export const logout = async () => {
   } catch (_) {}
 };
 
-export const getProfile = async () => {};
+export const getProfile = async (token) => {
+  try {
+    const response = await authApi.get('/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (_) {}
+};
 
 export default authApi;

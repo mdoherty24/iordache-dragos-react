@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../api/auth';
 import { loginUser, logoutUser, registerUser } from '../store/auth/authSlice';
 import { decrement, increment } from '../store/ui/uiSlice';
 
@@ -170,15 +171,25 @@ export default function Home({ hello }) {
   );
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   // const response = await fetch('https://swapi.dev/api/films');
   // const data = await response.json();
 
+  const token = context.req.headers.cookie.split('=')[1];
+
+  const user = await getProfile(token);
+
   return {
     props: {
-      hello: 'world',
+      hello: user.name || 'world',
       films: [],
-      initialReduxState: {},
+      initialReduxState: {
+        auth: {
+          user: user || {},
+          authenticated: !!user,
+          hi: '',
+        },
+      },
     },
   };
 };
