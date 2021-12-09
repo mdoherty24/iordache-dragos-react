@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { register } from '../../api/auth';
+import { register, login } from '../../api/auth';
 
 const initialState = {
   user: {},
@@ -7,17 +7,44 @@ const initialState = {
   established: false,
 };
 
-export const registerUser = createAsyncThunk(
-  'auth/register',
-  async ({ name, email, password }) => {
-    const credentials = await register(name, email, password);
-  },
-);
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducer: {},
+  reducers: {
+    setUser: (state, { payload }) => {
+      state.user = payload;
+      state.authenticated = true;
+    },
+    unsetUser: () => {},
+  },
 });
+
+export const { setUser } = authSlice.actions;
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async ({ name, email, password }, { dispatch }) => {
+    const credentials = await register(name, email, password);
+
+    document.cookie = `token=${credentials.token}`;
+
+    dispatch(setUser(credentials.user));
+
+    return credentials;
+  },
+);
+
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async ({ email, password }, { dispatch }) => {
+    const credentials = await login(email, password);
+
+    document.cookie = `token=${credentials.token}`;
+
+    dispatch(setUser(credentials.user));
+
+    return credentials;
+  },
+);
 
 export default authSlice.reducer;

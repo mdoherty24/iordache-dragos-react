@@ -1,12 +1,16 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../store/auth/authSlice';
+import { loginUser, registerUser } from '../store/auth/authSlice';
 import { decrement, increment } from '../store/ui/uiSlice';
 
 export default function Home({ hello }) {
   const [formState, setFormState] = useState({
     name: '',
+    password: '',
+    email: '',
+  });
+  const [loginFormState, setLoginFormState] = useState({
     password: '',
     email: '',
   });
@@ -28,10 +32,25 @@ export default function Home({ hello }) {
     });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     dispatch(registerUser(formState));
+  };
+
+  const onLoginFormFieldChanged = (event) => {
+    const field = event.target;
+
+    setLoginFormState({
+      ...loginFormState,
+      [field.name]: field.value,
+    });
+  };
+
+  const onLoginSubmit = async (event) => {
+    event.preventDefault();
+
+    dispatch(loginUser(loginFormState));
   };
 
   return (
@@ -79,6 +98,32 @@ export default function Home({ hello }) {
               className="border"
               value={formState.password}
               onChange={onFormFieldChanged}
+            />
+            <br /> <br />
+            <button type="submit" className="bg-purple-500">
+              Register
+            </button>
+          </form>
+
+          <form onSubmit={onLoginSubmit}>
+            <input
+              type="email"
+              name="login-email"
+              id="login-email"
+              placeholder="Email"
+              className="border"
+              value={loginFormState.email}
+              onChange={onLoginFormFieldChanged}
+            />
+            <br />
+            <input
+              type="password"
+              name="login-password"
+              id="login-password"
+              placeholder="Password"
+              className="border"
+              value={loginFormState.password}
+              onChange={onLoginFormFieldChanged}
             />
             <br /> <br />
             <button type="submit" className="bg-purple-500">

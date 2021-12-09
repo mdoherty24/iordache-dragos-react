@@ -23,4 +23,21 @@ export const register = async (name, email, password) => {
   }
 };
 
+export const login = async (email, password) => {
+  try {
+    const response = await authApi.post('/login', {
+      email,
+      password,
+    });
+
+    return response.data;
+  } catch (response) {
+    return response;
+  }
+};
+
+export const logout = async () => {};
+
+export const getProfile = async () => {};
+
 export default authApi;
