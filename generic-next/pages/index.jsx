@@ -43,7 +43,7 @@ export default function Home({ hello }) {
 
     setLoginFormState({
       ...loginFormState,
-      [field.name]: field.value,
+      [field.name.replace('login-', '')]: field.value,
     });
   };
 
