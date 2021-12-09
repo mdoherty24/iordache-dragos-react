@@ -1,8 +1,15 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../store/auth/authSlice';
 import { decrement, increment } from '../store/ui/uiSlice';
 
-export default function Home({ hello, films }) {
+export default function Home({ hello }) {
+  const [formState, setFormState] = useState({
+    name: '',
+    password: '',
+    email: '',
+  });
   const count = useSelector(({ ui }) => {
     return ui.count;
   });
@@ -11,6 +18,21 @@ export default function Home({ hello, films }) {
     return auth;
   });
   const dispatch = useDispatch();
+
+  const onFormFieldChanged = (event) => {
+    const field = event.target;
+
+    setFormState({
+      ...formState,
+      [field.name]: field.value,
+    });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    dispatch(registerUser(formState));
+  };
 
   return (
     <>
@@ -28,7 +50,42 @@ export default function Home({ hello, films }) {
         </header>
 
         <main className="container mx-auto py-4 flex-grow">
-          insert forms
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              className="border"
+              value={formState.name}
+              onChange={onFormFieldChanged}
+            />
+            <br />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email"
+              className="border"
+              value={formState.email}
+              onChange={onFormFieldChanged}
+            />
+            <br />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              className="border"
+              value={formState.password}
+              onChange={onFormFieldChanged}
+            />
+            <br /> <br />
+            <button type="submit" className="bg-purple-500">
+              Register
+            </button>
+          </form>
+
           <div className="mt-16">
             <button
               onClick={() => {
@@ -62,11 +119,7 @@ export const getServerSideProps = async () => {
     props: {
       hello: 'world',
       films: [],
-      initialReduxState: {
-        ui: {
-          count: 42,
-        },
-      },
+      initialReduxState: {},
     },
   };
 };
