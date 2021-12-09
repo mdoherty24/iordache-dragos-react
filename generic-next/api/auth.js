@@ -36,7 +36,17 @@ export const login = async (email, password) => {
   }
 };
 
-export const logout = async () => {};
+export const logout = async () => {
+  try {
+    await authApi.post('/logout', null, {
+      headers: {
+        Authorization: `Bearer ${document.cookie.split('=')[1]}`,
+      },
+    });
+
+    document.cookie = '';
+  } catch (_) {}
+};
 
 export const getProfile = async () => {};
 

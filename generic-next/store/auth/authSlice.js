@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { register, login } from '../../api/auth';
+import { register, login, logout } from '../../api/auth';
 
 const initialState = {
   user: {},
@@ -15,11 +15,14 @@ const authSlice = createSlice({
       state.user = payload;
       state.authenticated = true;
     },
-    unsetUser: () => {},
+    unsetUser: () => {
+      state.user = {};
+      state.authenticated = false;
+    },
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, unsetUser } = authSlice.actions;
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -44,6 +47,15 @@ export const loginUser = createAsyncThunk(
     dispatch(setUser(credentials.user));
 
     return credentials;
+  },
+);
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { dispatch }) => {
+    await logout();
+
+    dispatch(unsetUser());
   },
 );
 

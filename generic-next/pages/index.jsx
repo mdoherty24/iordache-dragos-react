@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, registerUser } from '../store/auth/authSlice';
+import { loginUser, logoutUser, registerUser } from '../store/auth/authSlice';
 import { decrement, increment } from '../store/ui/uiSlice';
 
 export default function Home({ hello }) {
@@ -65,6 +65,20 @@ export default function Home({ hello }) {
           {hello}
           <div className="mt-4">
             User is {authenticated ? 'logged in' : 'logged out'}
+          </div>
+          <div>
+            {authenticated ? (
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         </header>
 
