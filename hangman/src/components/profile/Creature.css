@@ -1,0 +1,147 @@
+@keyframes action-blink {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0, 35px);
+  }
+  30% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes action-worry {
+  0% {
+    transform: translate(-50%, 0);
+  }
+  25% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(50%, 0);
+  }
+  75% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+.eye {
+  background-color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.eye__iris {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.eye__lid {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: -35px;
+  left: 0;
+}
+
+.eye--blinking .eye__lid {
+  animation-name: action-blink;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.eye--worried .eye__iris {
+  animation-name: action-worry;
+  animation-duration: 1.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.eye--annoyed .eye__lid {
+  top: -35px;
+  height: 55px;
+}
+
+.eye--closed .eye__lid {
+  animation: none;
+  top: 0;
+}
+
+.nose {
+  width: 60px;
+  height: 50px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.nose__nostril {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #000;
+  top: 20px;
+  position: absolute;
+}
+
+.nose__nostril--left {
+  left: 15px;
+}
+
+.nose__nostril--right {
+  right: 15px;
+}
+
+.creature {
+  width: 220px;
+  height: 160px;
+  border-radius: 30px;
+  border: 3px solid transparent;
+  position: relative;
+}
+
+.creature__eyes {
+  position: relative;
+  margin-top: 55px;
+}
+
+.creature__eye {
+  position: absolute;
+}
+
+.creature__eye--left {
+  left: 60px;
+}
+
+.creature__eye .eye__iris {
+  position: relative;
+  top: 5px;
+}
+
+.creature__eye--right {
+  right: 60px;
+}
+
+.creature__nose-line {
+  margin-top: 80px;
+}
+
+.creature__nose {
+  margin: 0 auto;
+}

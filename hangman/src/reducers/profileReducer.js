@@ -1,0 +1,48 @@
+import {
+  PROFILE_SET_COLOR,
+  PROFILE_SET_STATS,
+  PROFILE_SET_COLORS,
+} from '../actions/actionTypes';
+
+const initialState = {
+  stats: {
+    gamesWon: 0,
+    gamesLost: 0,
+    gamesPlayed: 0,
+  },
+  creature: {
+    mainColor: '#ffabce',
+    secondaryColor: '#ff7bad',
+    eyeColor: '#000000',
+  },
+};
+
+export const profileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case PROFILE_SET_COLOR:
+      return {
+        ...state,
+        creature: {
+          ...state.creature,
+          [action.payload.targetProperty]: action.payload.color,
+        },
+      };
+    case PROFILE_SET_COLORS:
+      return {
+        ...state,
+        creature: {
+          ...action.payload,
+        },
+      };
+    case PROFILE_SET_STATS:
+      return {
+        ...state,
+        stats: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default profileReducer;
